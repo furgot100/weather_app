@@ -18,7 +18,7 @@ def weather_results():
     API_KEY = '8f23d9ba5e589062e1110c726b2bdb57'
     
     weather = {
-        'name' : user_city,
+        'q' : user_city,
         'appid': API_KEY
     }
     
