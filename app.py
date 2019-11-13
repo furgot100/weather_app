@@ -4,6 +4,10 @@ import pprint
 
 app = Flask(__name__)
 
+
+pp = pprint.PrettyPrinter(indent=4)
+weather_url = 'http://api.openweathermap.org/data/2.5/weather'
+
 app.route('/')
 def index():
     return render_template('index.html')
@@ -22,18 +26,26 @@ def weather_results():
         'appid': API_KEY
     }
     
+    r = requests.get(weather_url, weather=weather)
+
+    if not r.status_code == 200:
+        print("error")
+    results = r.json()
+    city = results['name']
+
+    # print("It is now " + str(temp_in_kelvin) + " degrees in kelvin.")
+
     return render_template('weather_results.html', weather=weather)
 
 
-pp = pprint.PrettyPrinter(indent=4)
+def convertions(temp):
+    result = 1.8 * (temp-273) +32
+    return int(result)
 
-weather_url = 'http://api.openweathermap.org/data/2.5/weather?q=San+Francisco&appid=8f23d9ba5e589062e1110c726b2bdb57'
 
-response = requests.get(weather_url)
-response_json= response.json()
-# pp.pprint(response_json)
+# # print("It is now " + str(temp_in_kelvin) + " degrees in kelvin.")
 
-main_data = response_json["main"]
-temp_in_kelvin = main_data["temp"]
-pp.pprint(response_json)
-# print("It is now " + str(temp_in_kelvin) + " degrees in kelvin.")
+
+
+if __name__ == '__main__':
+    app.run()
