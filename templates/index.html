@@ -2,5 +2,10 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <a href="/weather"><button>What's the weather</button></a>
+    <a href="/"><button>What's the weather</button></a>
+    <form action="/weather_results">
+        Type in your city: <br>
+        <input type="text" name="city"><br>
+        <input type="submit" value="Submit!">
+    </form>
 {% endblock %}
