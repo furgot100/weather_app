@@ -1,6 +1,11 @@
 from flask import Flask, render_template, request
 import requests
 import pprint
+import os
+
+from dotenv import load_dotenv
+load_dotenv()
+
 
 app = Flask(__name__)
 
@@ -19,7 +24,7 @@ def weather():
 @app.route('/weather_results')
 def weather_results():
     user_city = request.args.get('city')
-    API_KEY = '8f23d9ba5e589062e1110c726b2bdb57'
+    API_KEY = os.getenv("API_KEY")
     
     params = {
         'q' : user_city,
